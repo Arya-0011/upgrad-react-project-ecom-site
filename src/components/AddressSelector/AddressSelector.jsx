@@ -41,7 +41,7 @@ const AddressSelector = ({ setAddress }) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": userInfo.token,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     })
       .then((res) => {
@@ -95,7 +95,7 @@ const AddressSelector = ({ setAddress }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": userInfo.token,
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({
         name,

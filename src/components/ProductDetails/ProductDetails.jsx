@@ -9,8 +9,9 @@ import Categories from "../../common/Categories";
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams(); // Extracting productId from the route parameters
-  const { userInfo } = useOutletContext(); // Accessing user information from the context
-
+  const storedUserInfo = JSON.parse(localStorage.getItem("userInfo")); // Get userInfo from local storage
+  const { userInfo } = useOutletContext() || storedUserInfo; // Use userInfo from context or local storage if context is not available
+  console.log(storedUserInfo)
   // State variables for product details, selected category, and order quantity
   const [product, setProduct] = useState({ category: "" });
   const [category, setCategory] = useState("all");
@@ -21,7 +22,8 @@ const ProductDetails = () => {
     fetch(`/api/products/${productId}`, {
       method: "GET",
       headers: {
-        "x-auth-token": userInfo.token,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
       },
     })
       .then((res) => {

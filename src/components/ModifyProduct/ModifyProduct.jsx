@@ -26,6 +26,7 @@ const ModifyProduct = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
       },
     })
       .then((res) => {
@@ -51,7 +52,7 @@ const ModifyProduct = () => {
       fetch(`/api/products/${productId}`, {
         method: "GET",
         headers: {
-          "x-auth-token": userInfo.token,
+          Authorization: `Bearer ${userInfo.token}`,
         },
       })
         .then((res) => {
@@ -109,7 +110,7 @@ const ModifyProduct = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": userInfo.token,
+          Authorization: `Bearer ${userInfo.token}`,
         },
         body: JSON.stringify({
           name,
@@ -126,7 +127,7 @@ const ModifyProduct = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": userInfo.token,
+          Authorization: `Bearer ${userInfo.token}`
         },
         body: JSON.stringify({
           name,

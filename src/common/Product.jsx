@@ -1,13 +1,5 @@
 import { Delete, Edit } from "@mui/icons-material";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./Product.css";
@@ -30,7 +22,8 @@ const Product = ({ product, userInfo, onDelete }) => {
     fetch(`/api/products/${product.id}`, {
       method: "DELETE",
       headers: {
-        "x-auth-token": userInfo.token,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
       },
     })
       .then((res) => {
@@ -96,7 +89,7 @@ const Product = ({ product, userInfo, onDelete }) => {
             </Button>
           </Link>
           {/* Check if user role is Admin and show edit & delete icons */}
-          {userInfo.roles.includes("ADMIN") && (
+          {userInfo && userInfo.roles && userInfo.roles.includes("ADMIN") && (
             <Typography className="adminOps">
               <IconButton aria-label="edit" onClick={modifyHandler}>
                 <Edit fontSize="small" />
@@ -110,6 +103,7 @@ const Product = ({ product, userInfo, onDelete }) => {
               </IconButton>
             </Typography>
           )}
+
         </CardActions>
       </Card>
     </>

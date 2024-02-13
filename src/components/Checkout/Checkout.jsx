@@ -22,7 +22,7 @@ const Checkout = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-auth-token": userInfo.token,
+        Authorization: `Bearer ${userInfo.token}`,
       },
       body: JSON.stringify({
         user: userInfo.id,

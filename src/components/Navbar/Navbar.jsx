@@ -2,12 +2,12 @@ import React from "react";
 import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import "./Navbar.css";
 import Searchbar from "../../common/Searchbar";
 
 const Navbar = ({ userInfo, setUserInfo }) => {
   const navigate = useNavigate();
+
   const logoutHandler = () => {
     setUserInfo({ token: "", roles: [] });
     localStorage.removeItem("userInfo");
@@ -26,7 +26,7 @@ const Navbar = ({ userInfo, setUserInfo }) => {
           >
             upGrad E-Shop
           </Typography>
-          {userInfo.token ? (
+          {userInfo?.token ? (
             <>
               <Searchbar />
               <Box sx={{ flexGrow: 1 }} />
@@ -34,7 +34,7 @@ const Navbar = ({ userInfo, setUserInfo }) => {
                 <Link className="headerLinks" to="/" color="inherit">
                   Home
                 </Link>
-                {userInfo.isAdmin && ( // Check if user is an ADMIN
+                {userInfo.isAdmin === true && ( // Check if user is an admin
                   <Link className="headerLinks" to="/addProduct" color="inherit">
                     Add Product
                   </Link>
@@ -57,7 +57,6 @@ const Navbar = ({ userInfo, setUserInfo }) => {
               </div>
             </>
           )}
-
         </Toolbar>
       </AppBar>
     </Box>

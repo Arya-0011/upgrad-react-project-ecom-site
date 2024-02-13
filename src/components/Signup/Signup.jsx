@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import { LockOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
 import Navbar from "../Navbar/Navbar";
 import Copyright from "../../common/Copyright";
 
@@ -31,10 +21,11 @@ const Signup = ({ userInfo }) => {
 
   // Check if user is already logged in else redirect to the home page
   useEffect(() => {
-    if (userInfo.token) {
+    if (userInfo && userInfo.token) {
       navigate("/");
     }
-  }, [userInfo.token, navigate]);
+  }, [userInfo, navigate]);
+  
 
   // Validate password and confirm password
   const isValidPassword = (password, confirmPassword) => {
