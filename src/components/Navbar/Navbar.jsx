@@ -2,7 +2,7 @@ import React from "react";
 import { ShoppingCart } from "@mui/icons-material";
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
 import "./Navbar.css";
 import Searchbar from "../../common/Searchbar";
 
@@ -34,7 +34,7 @@ const Navbar = ({ userInfo, setUserInfo }) => {
                 <Link className="headerLinks" to="/" color="inherit">
                   Home
                 </Link>
-                {userInfo.roles && userInfo.roles.includes("ADMIN") && (
+                {userInfo.isAdmin && ( // Check if user is an ADMIN
                   <Link className="headerLinks" to="/addProduct" color="inherit">
                     Add Product
                   </Link>

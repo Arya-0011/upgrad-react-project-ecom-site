@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-
 import Navbar from "../Navbar/Navbar";
 import Copyright from "../../common/Copyright";
 
@@ -50,9 +40,24 @@ const Login = ({ userInfo, setUserInfo }) => {
         return { ...data, token: data.token };
       })
       .then((data) => {
-        setUserInfo(data);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        navigate("/", { state: { message: "Login successful" } });
+        // Fetch user data to check if the user is an admin
+        fetch(`/api/users/65ca708b0a05d172281521a2`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((userData) => {
+            // Check if user has the role "ADMIN"
+            const isAdmin = userData.roles.some(role => role.name === "ADMIN");
+            setUserInfo({ ...data, isAdmin });
+            localStorage.setItem("userInfo", JSON.stringify({ ...data, isAdmin }));
+            navigate("/", { state: { message: "Login successful" } });
+          })
+          .catch((err) => {
+            toast.error(err.toString(), { toastId: "login-alert" });
+          });
       })
       .catch((err) => {
         toast.error(err.toString(), { toastId: "login-alert" });
